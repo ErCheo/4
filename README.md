@@ -9,7 +9,7 @@ RPS: 75K / 24 / 3600 ~= 1
 
 ### Функциональные требования
 
-#### User Story
+### User Story
 1. Как клиент автомойки, я хочу выбрать тип мойки автомобиля (ручная, автоматическая, экспресс), чтобы обслуживать свою машину в соответствии с предпочтениями и временем.
 2. Как клиент автомойки, я хочу записаться на мойку через мобильное приложение или сайт, чтобы выбрать удобное время и избежать очереди.
 3. Как клиент автомойки, я хочу получить уведомление о готовности автомобиля после мойки, чтобы точно знать, когда можно забрать машину.
@@ -21,7 +21,7 @@ RPS: 75K / 24 / 3600 ~= 1
 9. Как клиент автомойки, я хочу, чтобы персонал автомойки предложил рекомендации по уходу за кузовом или салоном машины, чтобы поддерживать её в хорошем состоянии.
 10. Как клиент автомойки, я хочу, чтобы на автомойке была зона отдыха с кофе или напитками, чтобы я мог комфортно подождать, пока мой автомобиль моется.
 
-#### Use Cases  
+### Use Cases  
 ![Картинка](https://github.com/user-attachments/assets/1584a754-ac12-405b-9388-c4564a8c7f25)
 
 ```
@@ -161,7 +161,7 @@ UI_01: Экран с картой и списком моек
 - Работник - Мойка: Один работник может обслуживать несколько мойок. (1:M)
 - Запись на мойку - Мойка: Каждая запись на мойку связана с конкретной мойкой. (1:1)
 
-#### ER-диаграмма
+### ER-диаграмма
 
 ![bLJHIXj15Fs2-OV1bpuKVw1F5glWSv4-XaNNTY79okvQaAPWiWyY1fHMQ94ejOBFgoPraut9BzpvevwPsJ6Pp8huiCFElNVkFUVClRCI9rwKx3NgZBtXT4bJSK03wkChy3rIJWCksY8LHzXCyDU1USZyPX8a-to9pX6NoqZHMU9Up5VtuYHi-17_nZX_QtQrZG_y7G-QYJJIRngB4-pZ90gQdvNfd2Oo1MKqmleeZcbOamLf](https://github.com/user-attachments/assets/440e5d41-d43a-42e5-a264-efdeeedfc486)
 
@@ -232,17 +232,66 @@ SingUpForACarWash ||--|| Wash
 @enduml
 ```
 
+### C4 model
+
+#### C1 - System Context
+<img width="800" alt="С1" src="https://github.com/user-attachments/assets/7aeb8f0c-68b4-43ba-b37b-af361101d766" />
+
+#### C2 - Containers
+<img width="800" alt="С2" src="https://github.com/user-attachments/assets/8b41dc2d-a61a-4a7c-83d1-37158d99e82d" />
 
 
+### Sequense Diagram
+![SequenceDiagram](https://github.com/user-attachments/assets/529e9863-ddc8-4f33-9b70-7d11e1a20e3f)
 
+```
+@startuml
+' Участники
+actor "Клиент" as Client
+participant "CarWashSystem" as System
+participant "Service" as Service
+participant "Order" as Order
+database "DataBase" as DB
+participant "PaySystem" as PaySystem
+participant "Платёжная штука" as Pay
 
+' Последовательность
+Client -> System: Запрос на выбор автомойки
+System -> DB: Запрос на выбор автомойки
+DB --> System: Список автомоек
+System -> System: Сортировка списка автомоек
+System -> Client: Список автомоек
 
+Client -> Service: Запрос на выбор услуги
+Service -> Service: Сортировка списка услуг
+Service --> Client: Список услуг
 
+Client -> Order: Запрос на выбор даты и времени
+Order --> Client: Подтверждение даты и времени
 
+Client -> Order: Запрос на подтверждение записи
+Order -> DB: Запрос на добавление записи в БД
+DB --> Order: Подтверждение добавления
+Order --> Client: Запись подтверждена
 
+Client -> PaySystem: Запрос на оплату заказа
+PaySystem -> DB: Запрос на получение списка заказов
+DB --> PaySystem: Список заказов
+PaySystem --> Client: Способ оплаты
+Client -> PaySystem: Выбор способа оплаты
+PaySystem -> Pay: Запрос на оплату заказа
+Pay --> Client: Подтверждение оплаты
+Client -> Pay: Оплата заказа
 
+Pay --> PaySystem: Оплата прошла
+PaySystem -> Order: Изменение статуса заказа
+Order -> DB: Запрос на изменение статуса заказа
+DB --> Order: Изменение статуса заказа
+Order --> PaySystem: Статус заказа изменён
+PaySystem --> Client: Заказ оплачен
 
-
+@enduml
+```
 
 
 
