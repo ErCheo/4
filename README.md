@@ -255,7 +255,6 @@ database "DataBase" as DB
 participant "PaySystem" as PaySystem
 participant "Платёжная штука" as Pay
 
-' Последовательность
 Client -> System: Запрос на выбор автомойки
 System -> DB: Запрос на выбор автомойки
 DB --> System: Список автомоек
