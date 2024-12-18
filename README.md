@@ -22,32 +22,34 @@ RPS: 75K / 24 / 3600 ~= 1
 10. Я как клиент автомойки, хочу, чтобы на автомойке была зона отдыха с кофе или напитками, чтобы я мог комфортно подождать, пока мой автомобиль моется.
 
 ### Use Cases  
-![Картинка](https://github.com/user-attachments/assets/1584a754-ac12-405b-9388-c4564a8c7f25)
+![UseCases](https://github.com/user-attachments/assets/03e523eb-96b3-4c10-be39-0872eda63c78)
 
 ```
 left to right direction
 actor "Клиент" as client
-actor "Платёжная штука" as plata
+rectangle "Платёжная штука" as plata
 rectangle ВсеМойки.ру {
-usecase "Управление своим профилем" as UC1
-usecase "Управлять своим авто" as UC2
-usecase "Выбрать город" as UC3
-usecase "Выбрать мойку" as UC4
-usecase "Дата время" as UC5
-usecase "Способ оплаты" as UC6
-usecase "Оплатить" as UC7
-usecase "Отменить запись" as UC8
+usecase "UC1: Управление своим профилем" as UC1
+usecase "UC2: Управлять своим авто" as UC2
+usecase "UC3: Запись на мойку" as UC3
+usecase "UC3.1: Выбрать город" as UC31
+usecase "UC3.2: Выбрать мойку" as UC32
+usecase "UC3.3: Дата время" as UC33
+usecase "UC4: Оплатить" as UC4
+usecase "UC4.1: Способ оплаты" as UC41
+usecase "UC5: Отменить запись" as UC5
 }
 
 client --> UC1
 client --> UC2
 client --> UC3
+UC3 ..> UC31:(include)
+UC3 ..> UC32:(include)
+UC3 ..> UC33:(include)
 client --> UC4
+UC4 ..> UC41:(include)
+UC41 --> plata
 client --> UC5
-client --> UC6
-client --> UC7
-client --> UC8
-UC7 --> plata
 
 @enduml
 ```
