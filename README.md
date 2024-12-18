@@ -7,9 +7,8 @@ DAU: 15% от 500К = 75К
 RPS: 75K / 24 / 3600 ~= 1  
 
 
-### Функциональные требования
+## User Story
 
-### User Story
 1. Я как клиент автомойки, хочу выбрать тип мойки автомобиля (ручная, автоматическая, экспресс), чтобы обслуживать свою машину в соответствии с предпочтениями и временем.
 2. Я как клиент автомойки, хочу записаться на мойку через мобильное приложение или сайт, чтобы выбрать удобное время и избежать очереди.
 3. Я как клиент автомойки, хочу получить уведомление о готовности автомобиля после мойки, чтобы точно знать, когда можно забрать машину.
@@ -21,38 +20,47 @@ RPS: 75K / 24 / 3600 ~= 1
 9. Я как клиент автомойки, хочу, чтобы персонал автомойки предложил рекомендации по уходу за кузовом или салоном машины, чтобы поддерживать её в хорошем состоянии.
 10. Я как клиент автомойки, хочу, чтобы на автомойке была зона отдыха с кофе или напитками, чтобы я мог комфортно подождать, пока мой автомобиль моется.
 
-### Use Cases  
-![UseCases](https://github.com/user-attachments/assets/03e523eb-96b3-4c10-be39-0872eda63c78)
 
-```
+
+## Use Cases  
+![UseCases](https://github.com/user-attachments/assets/a0b554d2-9811-42bc-83bc-c8a71b0ba51f)
+
+
+<details>
+  <summary>Код для Use Cases (PlantTextUML)</summary>
+  
+```plantuml
 left to right direction
 actor "Клиент" as client
 rectangle "Платёжная штука" as plata
 rectangle ВсеМойки.ру {
 usecase "UC1: Управление своим профилем" as UC1
-usecase "UC2: Управлять своим авто" as UC2
+usecase "UC2: Управление своим авто" as UC2
 usecase "UC3: Запись на мойку" as UC3
 usecase "UC3.1: Выбрать город" as UC31
-usecase "UC3.2: Выбрать мойку" as UC32
+usecase "UC3.1.1: Выбрать мойку" as UC311
+usecase "UC3.2: Выбрать услугу" as UC32
 usecase "UC3.3: Дата время" as UC33
-usecase "UC4: Оплатить" as UC4
+usecase "UC3.4: Отменить запись" as UC34
+usecase "UC4: Оплата услуги" as UC4
 usecase "UC4.1: Способ оплаты" as UC41
-usecase "UC5: Отменить запись" as UC5
 }
 
 client --> UC1
 client --> UC2
 client --> UC3
 UC3 ..> UC31:(include)
+UC31 ..> UC311:(include)
 UC3 ..> UC32:(include)
 UC3 ..> UC33:(include)
+UC3 ..> UC34:(include)
 client --> UC4
 UC4 ..> UC41:(include)
 UC41 --> plata
-client --> UC5
 
 @enduml
 ```
+</details>
 
 ### Сценарии использования:  
 - UC_01: Найти и выбрать автомойку
@@ -104,12 +112,15 @@ UI_01: Экран с картой и списком моек
 
 ### ER-диаграмма
 
-![ERD-diagram](https://github.com/user-attachments/assets/8b74ea75-78cd-4c90-8468-f33ba7cdb178)
+![ERD-diagram](https://github.com/user-attachments/assets/47603704-9662-4d8d-b1b9-b40575daf0de)
 
-```
+<details>
+  <summary>Код для ERD-diagram (PlantTextUML)</summary>
+  
+```plantuml
 @startuml
 
-entity "Клиент" as Customer {
+entity "Customer" as Customer {
   +Customer_ID : int
   +Name : string
   +ContactNumber : string
@@ -117,7 +128,7 @@ entity "Клиент" as Customer {
   +Email : string
 }
 
-entity "Автомобиль" as Car {
+entity "Car" as Car {
   +Car_ID : int
   +Make : string
   +Model : string
@@ -127,7 +138,7 @@ entity "Автомобиль" as Car {
   +Customer_ID : int
 }
 
-entity "Запись на мойку" as SingUpForACarWash {
+entity "SingUpForACarWash" as SingUpForACarWash {
   +SingUpForACarWash_ID : int
   +DateOfRecording : date
   +Status : string
@@ -135,14 +146,14 @@ entity "Запись на мойку" as SingUpForACarWash {
   +Car_ID : int
 }
 
-entity "Услуга" as Service {
+entity "Service" as Service {
   +Service_ID : int
   +Name : string
   +Description : string
   +Price : float
 }
 
-entity "Мойка" as Wash {
+entity "Wash" as Wash {
   +Wash_ID : int
   +Type : string
   +Status : string
@@ -153,7 +164,7 @@ entity "Мойка" as Wash {
   +SingUpForACarWash_ID : int
 }
 
-entity "Работник" as Employee {
+entity "Employee" as Employee {
   +Employee_ID : int
   +Name : string
   +JobTtitle : string
@@ -172,16 +183,19 @@ SingUpForACarWash ||--|| Wash
 @enduml
 ```
 
-### C4 model
+</details>
+
+## C4 model
 
 #### C1 - System Context
-<img width="800" alt="С1" src="https://github.com/user-attachments/assets/7aeb8f0c-68b4-43ba-b37b-af361101d766" />
+<img width="800" alt="С1" src="https://github.com/user-attachments/assets/b62087bf-0d09-459e-9f1d-6eec76be6546" />
 
 #### C2 - Containers
-<img width="800" alt="С2" src="https://github.com/user-attachments/assets/8b41dc2d-a61a-4a7c-83d1-37158d99e82d" />
+<img width="800" alt="С2" src="https://github.com/user-attachments/assets/00a8a246-7fca-45c0-9e3d-4ac3c3946470" />
 
 
-### Sequense Diagram
+
+## Sequense Diagram
 ![SequenceDiagram](https://github.com/user-attachments/assets/529e9863-ddc8-4f33-9b70-7d11e1a20e3f)
 
 ```
