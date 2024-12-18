@@ -101,129 +101,67 @@ UI_01: Экран с картой и списком моек
 ### Альтернативный сценарий 
 АС_1: Некорректный запрос пользователя
 
-### Нефункциональные требования
-
-
 
 ### ER-диаграмма
 
-#### Сущности и их атрибуты:
-
-- Клиент (Customer)
-  - ID клиента (Customer_ID)
-  - Имя (Name)
-  - Контактный номер (Phone)
-  - Электронная почта (Email)
-  - Адрес (Address)
-
-- Автомобиль (Car)
-  - ID автомобиля (Car_ID)
-  - Марка (Make)
-  - Модель (Model)
-  - Год выпуска (Year)
-  - Номерной знак (License_Plate)
-  - Тип (Car_Type) - легковой, внедорожник и т. д.
-  - Клиент_ID (Customer_ID) — связь с клиентом
-
-- Услуга (Service)
-  - ID услуги (Service_ID)
-  - Название (Service_Name) - мойка, полировка, химчистка и т. д.
-  - Описание (Description)
-  - Цена (Price)
-
-- Запись на мойку (SingUpForACarWash)
-  - ID записи (SingUpForACarWash_ID)
-  - Дата записи (Date)
-  - Статус записи (Status) - подтверждена, завершена, отменена и т. д.
-  - Клиент_ID (Customer_ID) — связь с клиентом
-  - Автомобиль_ID (Car_ID) — связь с автомобилем
-
-- Работник (Employee)
-  - ID работника (Employee_ID)
-  - Имя (Name)
-  - Должность (Position)
-  - Телефон (Phone)
-  - Электронная почта (Email)
-
-- Мойка (Wash)
-  - ID мойки (Wash_ID)
-  - Тип мойки (Wash_Type) - автоматическая, ручная, экспресс и т. д.
-  - Статус мойки (Wash_Status) - в процессе, завершена, отменена
-  - Время начала (Start_Time)
-  - Время окончания (End_Time)
-  - Работник_ID (Employee_ID) — связь с работником
-  - Услуга_ID (Service_ID) — связь с услугой
-  - Запись_ID (SingUpForACarWash_ID) — связь с записью
-
-#### Связи:
-- Клиент - Автомобиль: Один клиент может иметь несколько автомобилей. (1:M)
-- Автомобиль - Запись на мойку: Один автомобиль может быть связан с несколькими записями на мойку. (1:M)
-- Клиент - Запись на мойку: Один клиент может записать несколько автомобилей на мойку. (1:M)
-- Услуга - Мойка: Одна услуга может быть использована в нескольких мойках. (1:M)
-- Работник - Мойка: Один работник может обслуживать несколько мойок. (1:M)
-- Запись на мойку - Мойка: Каждая запись на мойку связана с конкретной мойкой. (1:1)
-
-### ER-диаграмма
-
-![bLJHIXj15Fs2-OV1bpuKVw1F5glWSv4-XaNNTY79okvQaAPWiWyY1fHMQ94ejOBFgoPraut9BzpvevwPsJ6Pp8huiCFElNVkFUVClRCI9rwKx3NgZBtXT4bJSK03wkChy3rIJWCksY8LHzXCyDU1USZyPX8a-to9pX6NoqZHMU9Up5VtuYHi-17_nZX_QtQrZG_y7G-QYJJIRngB4-pZ90gQdvNfd2Oo1MKqmleeZcbOamLf](https://github.com/user-attachments/assets/440e5d41-d43a-42e5-a264-efdeeedfc486)
+![ERD-diagram](https://github.com/user-attachments/assets/8b74ea75-78cd-4c90-8468-f33ba7cdb178)
 
 ```
 @startuml
 
-' Определение сущностей
 entity "Клиент" as Customer {
   +Customer_ID : int
-  +Имя : string
-  +Контактный_номер : string
-  +Адрес : string
+  +Name : string
+  +ContactNumber : string
+  +Address : string
   +Email : string
 }
 
 entity "Автомобиль" as Car {
   +Car_ID : int
-  +Марка : string
-  +Модель : string
-  +Год_выпуска : int
-  +Номерной_знак : string
-  +Тип : string
+  +Make : string
+  +Model : string
+  +YearOfIssue : int
+  +NumberPlate : string
+  +Type : string
   +Customer_ID : int
 }
 
 entity "Запись на мойку" as SingUpForACarWash {
   +SingUpForACarWash_ID : int
-  +Дата_записи : date
-  +Статус : string
+  +DateOfRecording : date
+  +Status : string
   +Customer_ID : int
   +Car_ID : int
 }
 
 entity "Услуга" as Service {
   +Service_ID : int
-  +Название : string
-  +Описание : string
-  +Цена : float
+  +Name : string
+  +Description : string
+  +Price : float
 }
 
 entity "Мойка" as Wash {
   +Wash_ID : int
-  +Тип : string
-  +Статус : string
-  +Время_начала : date
-  +Время_окончания : date
+  +Type : string
+  +Status : string
+  +StartDate : date
+  +EndDate : date
   +Employee_ID : int
   +Service_ID : int
-  + SingUpForACarWash_ID : int
+  +SingUpForACarWash_ID : int
 }
 
 entity "Работник" as Employee {
   +Employee_ID : int
-  +Имя : string
-  +Должность : string
-  +Контактный_номер : string
+  +Name : string
+  +JobTtitle : string
+  +ContactNumber : string
   +Email : string
 }
 
-' Связи между сущностями
+
 Customer ||--o| Car 
 Car ||--o| SingUpForACarWash 
 Customer ||--o| SingUpForACarWash
