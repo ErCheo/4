@@ -479,7 +479,7 @@ WebApp --> Client: Получение ответа от тех поддержк�
 
 <img width="800" alt="OpenAPI (service)" src="https://github.com/user-attachments/assets/31ebc4ed-a5ef-4fbd-b11b-cf29c1835de7" />
 
-Код для OpenAPI можно посмотреть [здесь](./openapi.yaml)
+Код для OpenAPI можно посмотреть [здесь](./Материалы/openapi.yaml)
 
 
 
