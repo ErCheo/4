@@ -471,13 +471,13 @@ WebApp --> Client: Получение ответа от тех поддержк�
 
 ## Спецификация OpenAPI
 
-<img width="452" alt="OpenAPI (user)" src="https://github.com/user-attachments/assets/2bba1d6d-ec92-4055-b45c-f19d673a8199" />
+<img width="800" alt="OpenAPI (user)" src="https://github.com/user-attachments/assets/2bba1d6d-ec92-4055-b45c-f19d673a8199" />
 
-<img width="455" alt="OpenAPI (order)" src="https://github.com/user-attachments/assets/fa62eed0-c218-4bdc-a361-3cc280a34654" />
+<img width="800" alt="OpenAPI (order)" src="https://github.com/user-attachments/assets/fa62eed0-c218-4bdc-a361-3cc280a34654" />
 
-<img width="450" alt="OpenAPI (washer)" src="https://github.com/user-attachments/assets/b24511b1-f0c6-4738-a579-e5b143506ad3" />
+<img width="800" alt="OpenAPI (washer)" src="https://github.com/user-attachments/assets/b24511b1-f0c6-4738-a579-e5b143506ad3" />
 
-<img width="457" alt="OpenAPI (service)" src="https://github.com/user-attachments/assets/31ebc4ed-a5ef-4fbd-b11b-cf29c1835de7" />
+<img width="800" alt="OpenAPI (service)" src="https://github.com/user-attachments/assets/31ebc4ed-a5ef-4fbd-b11b-cf29c1835de7" />
 
 Код для OpenAPI можно посмотреть [здесь](./openapi.yaml)
 
