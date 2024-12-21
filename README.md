@@ -62,7 +62,7 @@ UC41 --> plata
 ```
 </details>
 
-## Сценарии использования:  
+## Сценарии использования
 ### UC1: Управление своим профилем
 - Участники: Клиент
 - Предусловия: Пользователь зарегистрирован и авторизован
@@ -404,56 +404,70 @@ SingUpForACarWash ||--|| Wash
 
 
 ## Sequense Diagram
-![SequenceDiagram](https://github.com/user-attachments/assets/529e9863-ddc8-4f33-9b70-7d11e1a20e3f)
+![SequenceDiagram](https://github.com/user-attachments/assets/151211ee-f02b-4789-b0c1-b9715074378e)
 
-```
-@startuml
-' Участники
+
+
+<details>
+  <summary>Код для Sequence Diagram (PlantTextUML)</summary>
+	
+```plantUML
+title Car Wash Booking System
+
 actor "Клиент" as Client
-participant "CarWashSystem" as System
-participant "Service" as Service
-participant "Order" as Order
-database "DataBase" as DB
-participant "PaySystem" as PaySystem
-participant "Платёжная штука" as Pay
+participant "Мобильное приложение / Веб-приложение" as WebApp
+participant "API" as API
+participant "База данных" as DB
+participant "Платёжная система" as PaySystem
+participant "Тех поддержка" as Support
 
-Client -> System: Запрос на выбор автомойки
-System -> DB: Запрос на выбор автомойки
-DB --> System: Список автомоек
-System -> System: Сортировка списка автомоек
-System -> Client: Список автомоек
+Client -> WebApp: Запрос на получение списка услуг
+WebApp -> API: Получение списка услуг
+API -> DB: Запрос на получение доступных услуг
+DB --> API: Возврат списка доступных услуг
+API --> WebApp: Отправка списка доступных услуг
+WebApp --> Client: Получение списка доступных услуг
 
-Client -> Service: Запрос на выбор услуги
-Service -> Service: Сортировка списка услуг
-Service --> Client: Список услуг
+Client -> WebApp: Выбор необходимых услуг и автомобиля
+WebApp -> API: Создание записи на мойку
+API -> DB: Добавление записи в БД
+DB --> API: Возврат ID записи
+API --> WebApp: Возврат подтверждения записи
+WebApp --> Client: Отображение подтверждения записи
 
-Client -> Order: Запрос на выбор даты и времени
-Order --> Client: Подтверждение даты и времени
+Client -> WebApp: Запрос на получение даты и времени
+WebApp -> API: Получение даты и времени
+API -> DB: Запрос на получение свободных даты и времени
+DB --> API: Возврат свободных даты и времени
+API --> WebApp: Отправка свободных даты и времени
+WebApp --> Client: Получение свободных даты и времени
 
-Client -> Order: Запрос на подтверждение записи
-Order -> DB: Запрос на добавление записи в БД
-DB --> Order: Подтверждение добавления
-Order --> Client: Запись подтверждена
+Client -> WebApp: Запрос на выбор даты и времени
+WebApp -> API: Запрос на изменение даты и времени в записи
+API -> DB: Внесение изменений в запись
+DB --> API: Возврат ID записи
+API --> WebApp: Возврат подтверждения изменения записи
+WebApp --> Client: Отображение подтверждения изменения записи
 
-Client -> PaySystem: Запрос на оплату заказа
-PaySystem -> DB: Запрос на получение списка заказов
-DB --> PaySystem: Список заказов
-PaySystem --> Client: Способ оплаты
-Client -> PaySystem: Выбор способа оплаты
-PaySystem -> Pay: Запрос на оплату заказа
-Pay --> Client: Подтверждение оплаты
-Client -> Pay: Оплата заказа
+Client -> WebApp: Инициирование оплаты
+WebApp -> API: Запрос на создание платежа 
+API -> PaySystem: Получение данных на оплату
+PaySystem -> Client: Запрос на выбор способа оплаты
+Client --> PaySystem: Возврат способа оплаты
+PaySystem --> API: Возврат подтверждения оплаты
+API --> WebApp: Возврат подтверждения оплаты
+WebApp --> Client: Отображение подтверждения оплаты
 
-Pay --> PaySystem: Оплата прошла
-PaySystem -> Order: Изменение статуса заказа
-Order -> DB: Запрос на изменение статуса заказа
-DB --> Order: Изменение статуса заказа
-Order --> PaySystem: Статус заказа изменён
-PaySystem --> Client: Заказ оплачен
+Client -> WebApp: Запрос на получение тех поддержки
+WebApp -> API: Запрос на сервер
+API -> Support: Перенаправление запроса в тех поддержку
+Support --> API: Возврат ответа
+API --> WebApp: Возврат ответа от тех поддержки
+WebApp --> Client: Получение ответа от тех поддержки
 
 @enduml
 ```
-
+</details>
 
 
 
